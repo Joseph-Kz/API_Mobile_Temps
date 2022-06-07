@@ -4,7 +4,7 @@ import 'package:path/path.dart';
 import '../models/citydb.dart';
 
 class SqliteService {
-  Future<Database> intDB() async {
+  Future<Database> initDB() async {
     String path = await getDatabasesPath();
 
     return openDatabase(
@@ -18,8 +18,28 @@ class SqliteService {
     );
   }
 
-  Future<bool> inertData() async {}
+  Future<bool> inertData(CityModel cityModel) async {
+    final Database db = await initDB();
+    db.insert("Cities", cityModel.toMap());
+    return true;
+  }
 
+  Future<List<CityModel>> getData() async {
+    final Database db = await initDB();
+    final List<Map<String, Object?>> datas = await db.query("Cities");
+    return datas.map((e) => CityModel.fromMap(e)).toList();
+  }
+
+  Future<void> update(CityModel cityModel, int id) async {
+    final Database db = await initDB();
+    await db
+        .update("Cities", cityModel.toMap(), where: "id=?", whereArgs: [id]);
+  }
+
+  Future<void> delete(int id) async {
+    final Database db = await initDB();
+    await db.delete("Cities", where: "id=?", whereArgs: [id]);
+  }
   // void createTable(Database db) async {
   //   db?.execute(
   //       "CREATE TABLE Cities(id INTEGER PRIMARY KEY AUTOINCREMENT, city TEXT NOT NULL)");

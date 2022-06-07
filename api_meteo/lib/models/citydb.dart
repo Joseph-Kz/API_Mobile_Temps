@@ -1,8 +1,8 @@
 class CityModel {
-  final int id;
-  final String city;
+  int? id;
+  String city;
 
-  CityModel({required this.id, required this.city});
+  CityModel({this.id, required this.city});
 
   factory CityModel.fromMap(Map<String, dynamic> json) =>
       CityModel(id: json["id"], city: json["city"]);
