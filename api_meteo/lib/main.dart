@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 
+<<<<<<< HEAD
 import 'screens/homepage.dart';
+=======
+import 'models/homePage.dart';
+>>>>>>> d48d95ff7ceb83d4a58afbe8858409fa0ac9e7d7
 
 void main() {
   runApp(const MyApp());
@@ -13,12 +17,16 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'API Meteo',
-      theme: ThemeData(
-        primarySwatch: Colors.indigo,
-      ),
+      title: 'Meteo Demo',
       debugShowCheckedModeBanner: false,
-      home: const MyHomePage(title: 'Nom de Ville'),
+      theme: ThemeData(
+        textTheme: Theme.of(context).textTheme.apply(
+          bodyColor: Colors.white,
+          displayColor: Colors.green
+        )
+      ),
+      home: const HomePage(),
     );
   }
 }
+
