@@ -1,11 +1,11 @@
-import 'dart:html';
-
 import 'package:api_meteo/models/city.dart';
 import 'package:api_meteo/services/day_API.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_glow/flutter_glow.dart';
 
+import '../db/sqflite_service.dart';
 import '../views/pageDetail.dart';
+import 'citydb.dart';
 import 'meteo.dart';
 import 'meteoDetail.dart';
 
@@ -42,98 +42,99 @@ class MeteoActu extends StatelessWidget {
       ),
       color: Colors.green,
       spreadRadius: 5,
-      child: Column(
-        children: [
-          // FutureBuilder<City>(
-          //     future: getInfoData(cityController.text),
-          //     builder: (context, snapshot) {
-          //       if (snapshot.connectionState == ConnectionState.waiting) {
-          //         return const Center(child: Text("Chargement en cours..."));
-          //       } else if (snapshot.connectionState == ConnectionState.done) {
-          //         return ListTile(
-          //           title: Text(snapshot.data!.name.toString()),
-          //         );
-          //       } else {
-          //         return const Text("Une error est survenue. ");
-          //       }
-          //     }),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Icon(
-                Icons.reorder_rounded,
-                color: Colors.white,
-              ),
-              Row(
+      child: FutureBuilder<City>(
+          future: getInfoData("Lyon"),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(child: Text("Chargement en cours..."));
+            } else if (snapshot.connectionState == ConnectionState.done) {
+              return Column(
                 children: [
-                  Text(
-                    " " + meteoJour[0].nom,
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Icon(
+                        Icons.reorder_rounded,
+                        color: Colors.white,
+                      ),
+                      Row(
+                        children: [
+                          Text(
+                            snapshot.data!.name.toString(),
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 30),
+                          ),
+                        ],
+                      ),
+                      Icon(
+                        Icons.more_vert,
+                        color: Colors.white,
+                      )
+                    ],
                   ),
-                ],
-              ),
-              Icon(
-                Icons.more_vert,
-                color: Colors.white,
-              )
-            ],
-          ),
-          Container(
-            margin: EdgeInsets.only(top: 10),
-            padding: EdgeInsets.all(10),
-            decoration: BoxDecoration(
-              border: Border.all(width: 0.2, color: Colors.white),
-              borderRadius: BorderRadius.circular(30),
-            ),
-            child: Text(
-              "Actualiser",
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-          ),
-          Container(
-            height: 330,
-            child: Stack(
-              children: [
-                Image(
-                  image: AssetImage("images/sunny.png"),
-                  fit: BoxFit.fill,
-                ),
-                Positioned(
-                  bottom: 0,
-                  right: 0,
-                  left: 0,
-                  child: Center(
-                    child: Column(
+                  Container(
+                    margin: EdgeInsets.only(top: 10),
+                    padding: EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                      border: Border.all(width: 0.2, color: Colors.white),
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                    child: Text(
+                      "Actualiser",
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  Container(
+                    height: 330,
+                    child: Stack(
                       children: [
-                        GlowText(
-                          (meteoJour[0].kelvin - 273.15).toString() + "\u00B0",
-                          style: TextStyle(
-                              height: 0.1,
-                              fontSize: 80,
-                              fontWeight: FontWeight.bold),
+                        Image(
+                          image: AssetImage("assets/sunny.png"),
+                          fit: BoxFit.fill,
                         ),
-                        Text(
-                          "Soleil",
-                          style: TextStyle(fontSize: 25),
-                        ),
-                        Text(
-                          "Jour 1",
-                          style: TextStyle(fontSize: 25),
-                        ),
+                        Positioned(
+                          bottom: 0,
+                          right: 0,
+                          left: 0,
+                          child: Center(
+                            child: Column(
+                              children: [
+                                GlowText(
+                                  (snapshot.data!.main!.temp!)
+                                          .toInt()
+                                          .toString() +
+                                      "\u00B0",
+                                  style: TextStyle(
+                                      height: 0.1,
+                                      fontSize: 70,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                Text(
+                                  "Soleil",
+                                  style: TextStyle(fontSize: 25),
+                                ),
+                                Text(
+                                  "Jour 1",
+                                  style: TextStyle(fontSize: 25),
+                                ),
+                              ],
+                            ),
+                          ),
+                        )
                       ],
                     ),
                   ),
-                )
-              ],
-            ),
-          ),
-          Divider(color: Colors.white),
-          SizedBox(
-            height: 5,
-          ),
-          MeteoDetail(meteoJour[0])
-        ],
-      ),
+                  Divider(color: Colors.white),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  MeteoDetail(meteoJour[0]),
+                ],
+              );
+            } else {
+              return const Text("Une error est survenue. ");
+            }
+          }),
     );
   }
 }
@@ -221,7 +222,7 @@ class MeteoWidget extends StatelessWidget {
             height: 2,
           ),
           Image(
-            image: AssetImage("images/rainy_2d.png"),
+            image: AssetImage("assets/rainy_2d.png"),
             width: 40,
             height: 40,
           ),
