@@ -1,5 +1,7 @@
 import 'dart:html';
 
+import 'package:api_meteo/models/city.dart';
+import 'package:api_meteo/services/day_API.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_glow/flutter_glow.dart';
 
@@ -42,6 +44,19 @@ class MeteoActu extends StatelessWidget {
       spreadRadius: 5,
       child: Column(
         children: [
+          // FutureBuilder<City>(
+          //     future: getInfoData(cityController.text),
+          //     builder: (context, snapshot) {
+          //       if (snapshot.connectionState == ConnectionState.waiting) {
+          //         return const Center(child: Text("Chargement en cours..."));
+          //       } else if (snapshot.connectionState == ConnectionState.done) {
+          //         return ListTile(
+          //           title: Text(snapshot.data!.name.toString()),
+          //         );
+          //       } else {
+          //         return const Text("Une error est survenue. ");
+          //       }
+          //     }),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [

@@ -18,10 +18,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
           textTheme: Theme.of(context)
               .textTheme
-              .apply(bodyColor: Colors.white, displayColor: Colors.green)),
-      home: const MyHomePage(
-        title: 'Meteo',
-      ),
+              .apply(bodyColor: Colors.black, displayColor: Colors.green)),
+      home: const HomePage(),
     );
   }
 }
