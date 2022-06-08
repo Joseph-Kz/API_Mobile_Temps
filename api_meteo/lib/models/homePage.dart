@@ -110,7 +110,8 @@ class MeteoActu extends StatelessWidget {
                                       fontWeight: FontWeight.bold),
                                 ),
                                 Text(
-                                  "Soleil",
+                                  (snapshot.data!.weather![0].description)
+                                      .toString(),
                                   style: TextStyle(fontSize: 25),
                                 ),
                                 Text(
@@ -154,6 +155,7 @@ class MeteoJour extends StatelessWidget {
               Text(
                 "Aujourd'hui",
                 style: TextStyle(
+                  // color: Colors.white,
                   fontSize: 25,
                   fontWeight: FontWeight.bold,
                 ),
