@@ -13,7 +13,7 @@ class MeteoDetail extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
         child: FutureBuilder<City>(
-            future: getInfoData("Lyon"),
+            future: getMainpageInfo("Lyon"),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return const Center(child: Text("Chargement en cours..."));
@@ -31,7 +31,8 @@ class MeteoDetail extends StatelessWidget {
                           height: 2,
                         ),
                         Text(
-                          (snapshot.data!.wind!.speed).toString() + "Km/H",
+                          (snapshot.data!.wind! * 3.6).toInt().toString() +
+                              " km/h",
                           style: TextStyle(
                               fontWeight: FontWeight.w700, fontSize: 15),
                         ),
@@ -54,7 +55,7 @@ class MeteoDetail extends StatelessWidget {
                           height: 2,
                         ),
                         Text(
-                          "10 %",
+                          snapshot.data!.main!.humidity.toString() + " %",
                           style: TextStyle(
                               fontWeight: FontWeight.w700, fontSize: 15),
                         ),
@@ -70,7 +71,7 @@ class MeteoDetail extends StatelessWidget {
                   ],
                 );
               } else {
-                return const Text("Une error est survenue. ");
+                return const Text("Une error est survenue.");
               }
             }));
   }

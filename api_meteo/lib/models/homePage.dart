@@ -43,7 +43,7 @@ class MeteoActu extends StatelessWidget {
       color: Colors.green,
       spreadRadius: 5,
       child: FutureBuilder<City>(
-          future: getInfoData("Lyon"),
+          future: getMainpageInfo("Lyon"),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(child: Text("Chargement en cours..."));
@@ -155,7 +155,6 @@ class MeteoJour extends StatelessWidget {
               Text(
                 "Aujourd'hui",
                 style: TextStyle(
-                  // color: Colors.white,
                   fontSize: 25,
                   fontWeight: FontWeight.bold,
                 ),
