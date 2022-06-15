@@ -1,10 +1,13 @@
 import 'package:api_meteo/models/city.dart';
 import 'package:api_meteo/services/day_API.dart';
 import 'package:flutter/material.dart';
+import 'package:jiffy/jiffy.dart';
 import 'package:flutter_glow/flutter_glow.dart';
 
 import '../db/sqflite_service.dart';
+import '../screens/homepage.dart';
 import '../views/pageDetail.dart';
+import 'city4H.dart';
 import 'citydb.dart';
 import 'meteo.dart';
 import 'meteoDetail.dart';
@@ -31,6 +34,8 @@ class MeteoActu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    List<CityModel> datas = [];
+    DateTime currentTime = DateTime.now();
     return GlowContainer(
       height: MediaQuery.of(context).size.height - 230,
       margin: EdgeInsets.all(2),
@@ -53,9 +58,17 @@ class MeteoActu extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Icon(
-                        Icons.reorder_rounded,
-                        color: Colors.white,
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(context, MaterialPageRoute(
+                              builder: (BuildContext context) {
+                            return HomePage2();
+                          }));
+                        },
+                        child: Icon(
+                          Icons.reorder_rounded,
+                          color: Colors.white,
+                        ),
                       ),
                       Row(
                         children: [
@@ -109,13 +122,18 @@ class MeteoActu extends StatelessWidget {
                                       fontSize: 70,
                                       fontWeight: FontWeight.bold),
                                 ),
+                                SizedBox(
+                                  height: 20,
+                                ),
                                 Text(
                                   (snapshot.data!.weather![0].description)
                                       .toString(),
                                   style: TextStyle(fontSize: 25),
                                 ),
                                 Text(
-                                  "Jour 1",
+                                  Jiffy(currentTime)
+                                      .format('EEEE dd MMMM yyyy')
+                                      .toString(),
                                   style: TextStyle(fontSize: 25),
                                 ),
                               ],
@@ -129,7 +147,7 @@ class MeteoActu extends StatelessWidget {
                   SizedBox(
                     height: 5,
                   ),
-                  MeteoDetail(meteoJour[0]),
+                  MeteoDetail(),
                 ],
               );
             } else {
@@ -189,14 +207,24 @@ class MeteoJour extends StatelessWidget {
             margin: EdgeInsets.only(
               bottom: 30,
             ),
-            child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  MeteoWidget(meteoJour[0]),
-                  MeteoWidget(meteoJour[0]),
-                  MeteoWidget(meteoJour[0]),
-                  MeteoWidget(meteoJour[0]),
-                ]),
+            child: FutureBuilder<City4H>(
+                future: get4HInfo("Lyon"),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(child: Text("Chargement en cours..."));
+                  } else if (snapshot.connectionState == ConnectionState.done) {
+                    return Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          MeteoWidget(snapshot.data!.list![0]),
+                          MeteoWidget(snapshot.data!.list![1]),
+                          MeteoWidget(snapshot.data!.list![2]),
+                          MeteoWidget(snapshot.data!.list![3]),
+                        ]);
+                  } else {
+                    return const Text("Une error est survenue.");
+                  }
+                }),
           ),
         ],
       ),
@@ -205,7 +233,7 @@ class MeteoJour extends StatelessWidget {
 }
 
 class MeteoWidget extends StatelessWidget {
-  final Meteo meteo;
+  final ListW meteo;
   MeteoWidget(this.meteo);
 
   @override
@@ -217,7 +245,7 @@ class MeteoWidget extends StatelessWidget {
           borderRadius: BorderRadius.circular(30)),
       child: Column(
         children: [
-          Text((meteo.kelvin - 273.15).toString() + "\u00B0",
+          Text((meteo.main!.temp!.toInt()).toString() + "\u00B0",
               style: TextStyle(fontSize: 20)),
           SizedBox(
             height: 2,
@@ -231,7 +259,7 @@ class MeteoWidget extends StatelessWidget {
             height: 2,
           ),
           Text(
-            "12:00",
+            Jiffy(meteo.dtTxt).format('H:mm').toString(),
             style: TextStyle(
               fontSize: 16,
               color: Colors.grey,

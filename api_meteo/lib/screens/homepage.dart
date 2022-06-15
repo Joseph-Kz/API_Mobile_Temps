@@ -114,6 +114,7 @@ import 'package:flutter/material.dart';
 
 import '../db/sqflite_service.dart';
 import '../models/DataCard.dart';
+import '../models/homePage.dart';
 
 class HomePage2 extends StatefulWidget {
   const HomePage2({Key? key}) : super(key: key);
@@ -153,32 +154,40 @@ class _HomePage2State extends State<HomePage2> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: Text("DB Test"),
-        backgroundColor: Colors.yellow,
-      ),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.yellow,
-        onPressed: () {
-          showMyDilogue();
-        },
-        child: Icon(Icons.add),
-      ),
-      body: fetching
-          ? Center(
-              child: CircularProgressIndicator(),
-            )
-          : ListView.builder(
-              itemCount: datas.length,
-              itemBuilder: (context, index) => DataCard(
-                data: datas[index],
-                edit: edit,
-                index: index,
-                delete: delete,
-              ),
-            ),
-    );
+        appBar: AppBar(
+          centerTitle: true,
+          title: Text("DB Test"),
+          backgroundColor: Colors.yellow,
+        ),
+        floatingActionButton: FloatingActionButton(
+          backgroundColor: Colors.yellow,
+          onPressed: () {
+            showMyDilogue();
+          },
+          child: Icon(Icons.add),
+        ),
+        body: fetching
+            ? Center(
+                child: CircularProgressIndicator(),
+              )
+            : ListView.builder(
+                itemCount: datas.length,
+                itemBuilder: (context, index) {
+                  return GestureDetector(
+                      child: DataCard(
+                        data: datas[index],
+                        edit: edit,
+                        index: index,
+                        delete: delete,
+                      ),
+                      onTap: () {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (BuildContext context) {
+                          return HomePage();
+                        }));
+                      });
+                },
+              ));
   }
 
   void showMyDilogue() async {
@@ -265,5 +274,9 @@ class _HomePage2State extends State<HomePage2> {
     setState(() {
       datas.removeAt(index);
     });
+  }
+
+  void getCities(index) {
+    db.getCities(datas[index].city);
   }
 }
