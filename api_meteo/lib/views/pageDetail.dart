@@ -34,19 +34,37 @@ class CinqJours extends StatelessWidget {
           padding: EdgeInsets.only(left: 10, right: 10, bottom: 15, top: 10),
           child:
             Row(
-              mainAxisAlignment: MainAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-              Text("j semaine",
+              Text("Lun",
               style: TextStyle(fontSize: 20),
               ),
               Container(
-                width: 130,
+                width: 135,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Image(image: AssetImage("images/rainy_2d.png"))
+                    Image(image: AssetImage("assets/rainy_2d.png"), width: 40,
+                    ),
+                    SizedBox(width: 15,),
+                    Text("Rainy",
+                      style: TextStyle(fontSize: 20)
+                    ,)
                   ],
                 ),
+              ),
+              Row(
+                children: [
+                  Text("+ 29 \u00B0", 
+                  style: TextStyle(fontSize: 20)
+                  ,),
+                  SizedBox(
+                    width: 5,
+                  ),
+                  Text("+ 18 \u00B0", 
+                  style: TextStyle(fontSize: 20, color: Colors.grey)
+                  )
+                ],
               )
             ],)
         
@@ -102,7 +120,7 @@ class MeteoProchain extends StatelessWidget {
                   height: MediaQuery.of(context).size.width/2,
                   decoration: BoxDecoration(
                     image: DecorationImage(
-                      image: AssetImage("images/thunder.png")
+                      image: AssetImage("assets/thunder.png")
                     ),
                   ),
                 ),
@@ -136,7 +154,7 @@ class MeteoProchain extends StatelessWidget {
                       ),
                     ),
                     SizedBox(height: 10,),
-                    Text("??",
+                    Text("sunny",
                     style: TextStyle(
                       fontSize: 15
                     )
