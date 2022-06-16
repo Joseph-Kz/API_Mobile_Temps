@@ -14,8 +14,8 @@ Application de donnée météo
 
 Vous arrivez sur la page principal contenant la meteo de la ville par défault.
 2 possibilités sont disponible:<br>
-                   |- Cliquez en haut à gauche pour accéder à la page d'ajout, de modifications et de supressions des villes. (à venir: cliquer sur la ville pour accéder à sa météo)
-                   <br>|- Cliquez sur "Détail" pour accéder à la météo des futures jours de la semaine.
+                   | - Cliquez en haut à gauche pour accéder à la page d'ajout, de modifications et de supressions des villes. (à venir: cliquer sur la ville pour accéder à sa météo)
+                   <br>| - Cliquez sur "Détail" pour accéder à la météo des futures jours de la semaine.
 
 
 #### Problèmes rencontrés
