@@ -132,9 +132,7 @@ class _HomePage2State extends State<HomePage2> {
   String cityToGet = "Lyon";
 
   void _increment() {
-    setState() {
-      _counter++;
-    }
+    _counter++;
   }
 
   late SqliteService db;
@@ -185,7 +183,7 @@ class _HomePage2State extends State<HomePage2> {
                         cityToGet = datas[index].city;
                         Navigator.push(context,
                             MaterialPageRoute(builder: (BuildContext context) {
-                          return HomePage(theCity:cityToGet);
+                          return HomePage(theCity: cityToGet);
                         }));
                       });
                 },
