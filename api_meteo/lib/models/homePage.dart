@@ -1,6 +1,5 @@
-import 'dart:html';
-
 import 'package:api_meteo/models/city.dart';
+import 'package:api_meteo/screens/homepage.dart';
 import 'package:api_meteo/services/day_API.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_glow/flutter_glow.dart';
@@ -34,7 +33,7 @@ class MeteoActu extends StatelessWidget {
     return GlowContainer(
       height: MediaQuery.of(context).size.height - 230,
       margin: EdgeInsets.all(2),
-      padding: EdgeInsets.only(top: 5, left: 30, right: 30),
+      padding: EdgeInsets.only(top: 15, left: 30, right: 30),
       glowColor: Colors.green.withOpacity(0.5),
       borderRadius: BorderRadius.only(
         bottomLeft: Radius.circular(50),
@@ -60,15 +59,23 @@ class MeteoActu extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Icon(
-                Icons.reorder_rounded,
-                color: Colors.white,
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (BuildContext context) {
+                    return MyHomePage();
+                  }));
+                },
+                child: Icon(
+                  Icons.reorder_rounded,
+                  color: Colors.white,
+                ),
               ),
               Row(
                 children: [
                   Text(
                     " " + meteoJour[0].nom,
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
+                    style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold, fontSize: 30),
                   ),
                 ],
               ),
@@ -87,7 +94,7 @@ class MeteoActu extends StatelessWidget {
             ),
             child: Text(
               "Actualiser",
-              style: TextStyle(fontWeight: FontWeight.bold),
+              style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),
             ),
           ),
           Container(
@@ -95,7 +102,7 @@ class MeteoActu extends StatelessWidget {
             child: Stack(
               children: [
                 Image(
-                  image: AssetImage("images/sunny.png"),
+                  image: AssetImage("assets/sunny.png"),
                   fit: BoxFit.fill,
                 ),
                 Positioned(
@@ -108,17 +115,18 @@ class MeteoActu extends StatelessWidget {
                         GlowText(
                           (meteoJour[0].kelvin - 273.15).toString() + "\u00B0",
                           style: TextStyle(
+                              color: Colors.white,
                               height: 0.1,
                               fontSize: 80,
                               fontWeight: FontWeight.bold),
                         ),
                         Text(
                           "Soleil",
-                          style: TextStyle(fontSize: 25),
+                          style: TextStyle(color: Colors.white,fontSize: 25),
                         ),
                         Text(
                           "Jour 1",
-                          style: TextStyle(fontSize: 25),
+                          style: TextStyle(color: Colors.white,fontSize: 25),
                         ),
                       ],
                     ),
@@ -152,7 +160,7 @@ class MeteoJour extends StatelessWidget {
             children: [
               Text(
                 "Aujourd'hui",
-                style: TextStyle(
+                style: TextStyle(color: Colors.white,
                   fontSize: 25,
                   fontWeight: FontWeight.bold,
                 ),
@@ -221,7 +229,7 @@ class MeteoWidget extends StatelessWidget {
             height: 2,
           ),
           Image(
-            image: AssetImage("images/rainy_2d.png"),
+            image: AssetImage("assets/rainy_2d.png"),
             width: 40,
             height: 40,
           ),

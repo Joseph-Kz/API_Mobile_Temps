@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'models/homePage.dart';
 import 'screens/homepage.dart';
 
 void main() {
@@ -18,7 +19,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
           textTheme: Theme.of(context)
               .textTheme
-              .apply(bodyColor: Colors.black, displayColor: Colors.green)),
+              .apply(bodyColor: Colors.black87, displayColor: Colors.green)),
       home: const HomePage(),
     );
   }

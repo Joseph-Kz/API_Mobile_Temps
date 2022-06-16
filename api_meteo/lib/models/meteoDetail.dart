@@ -15,17 +15,17 @@ class MeteoDetail extends StatelessWidget {
               Column(
                 children: [
                   Icon(Icons.air, color: Colors.white,),
-                  SizedBox(height: 2,),
+                  SizedBox(height: 1,),
                   Text("10 Km/H",
-                  style: TextStyle(
+                  style: TextStyle(color: Colors.white,
                     fontWeight: FontWeight.w700,
                     fontSize: 15
                   ),
                   ),
-                  SizedBox(height: 2,),
+                  SizedBox(height: 1,),
                   Text("Vent",
                   style: TextStyle(
-                    color: Colors.black54, 
+                    color: Colors.black87, 
                     fontSize: 15
                   ),),
                 ],
@@ -36,7 +36,7 @@ class MeteoDetail extends StatelessWidget {
                   Icon(Icons.air, color: Colors.white,),
                   SizedBox(height: 2,),
                   Text("10 %",
-                  style: TextStyle(
+                  style: TextStyle(color: Colors.white,
                     fontWeight: FontWeight.w700,
                     fontSize: 15
                   ),
@@ -44,7 +44,7 @@ class MeteoDetail extends StatelessWidget {
                   SizedBox(height: 2,),
                   Text("Humidité",
                   style: TextStyle(
-                    color: Colors.black54, 
+                    color: Colors.black87, 
                     fontSize: 15
                   ),),
                 ],

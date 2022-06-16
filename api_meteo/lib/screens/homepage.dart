@@ -7,15 +7,15 @@ import 'package:sqflite/sqflite.dart';
 // import '../services/day_API.dart';
 // import '../db/sqflite_service.dart';
 
-// class MyHomePage extends StatefulWidget {
-//   const MyHomePage({Key? key, required this.title}) : super(key: key);
+// class MyMyHomePage extends StatefulWidget {
+//   const MyMyHomePage({Key? key, required this.title}) : super(key: key);
 //   final String title;
 
 //   @override
-//   State<MyHomePage> createState() => _MyHomePageState();
+//   State<MyMyHomePage> createState() => _MyMyHomePageState();
 // }
 
-// class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
+// class _MyMyHomePageState extends State<MyMyHomePage> with TickerProviderStateMixin {
 //   TextEditingController cityController = TextEditingController();
 //   List<CityModel> datas = [];
 //   bool fetching = true;
@@ -115,14 +115,14 @@ import 'package:flutter/material.dart';
 import '../db/sqflite_service.dart';
 import '../models/DataCard.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+class MyHomePage extends StatefulWidget {
+  const MyHomePage({Key? key}) : super(key: key);
 
   @override
-  _HomePageState createState() => _HomePageState();
+  _MyHomePageState createState() => _MyHomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _MyHomePageState extends State<MyHomePage> {
   TextEditingController cityController = TextEditingController();
   List<CityModel> datas = [];
   bool fetching = true;

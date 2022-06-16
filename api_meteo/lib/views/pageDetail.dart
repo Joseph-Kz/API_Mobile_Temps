@@ -89,7 +89,7 @@ class MeteoProchain extends StatelessWidget {
       ),
       child: Column(children: [
         Padding(
-          padding: EdgeInsets.only(top: 10, right: 20, left: 20, bottom: 20),
+          padding: EdgeInsets.only(top: 25, right: 20, left: 20, bottom: 20),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
