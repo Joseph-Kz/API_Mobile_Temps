@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import '../services/day_API.dart';
 import 'city.dart';
 import 'citydb.dart';
-import 'meteo.dart';
 
 class MeteoDetail extends StatelessWidget {
   const MeteoDetail({Key? key}) : super(key: key);
@@ -37,7 +36,9 @@ class MeteoDetail extends StatelessWidget {
                           (snapshot.data!.wind! * 3.6).toInt().toString() +
                               " km/h",
                           style: TextStyle(
-                              fontWeight: FontWeight.w700, fontSize: 15, color: Colors.white),
+                              fontWeight: FontWeight.w700,
+                              fontSize: 15,
+                              color: Colors.white),
                         ),
                         SizedBox(
                           height: 2,
@@ -60,7 +61,9 @@ class MeteoDetail extends StatelessWidget {
                         Text(
                           snapshot.data!.main!.humidity.toString() + " %",
                           style: TextStyle(
-                              fontWeight: FontWeight.w700, fontSize: 15, color: Colors.white),
+                              fontWeight: FontWeight.w700,
+                              fontSize: 15,
+                              color: Colors.white),
                         ),
                         SizedBox(
                           height: 2,
@@ -74,7 +77,10 @@ class MeteoDetail extends StatelessWidget {
                   ],
                 );
               } else {
-                return const Text("Une error est survenue.", style: TextStyle(color: Colors.white),);
+                return const Text(
+                  "Une error est survenue.",
+                  style: TextStyle(color: Colors.white),
+                );
               }
             }));
   }
@@ -87,13 +93,16 @@ class MeteoDetail4H extends StatelessWidget {
   Widget build(BuildContext context) {
     List<CityModel> datas = [];
     int currentIndex = 0;
-    // CityModel city = datas[currentIndex];
     return Container(
         child: FutureBuilder<City4H>(
             future: get4HInfo("Lyon"),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
-                return const Center(child: Text("Chargement en cours...", style: TextStyle(color: Colors.white),));
+                return const Center(
+                    child: Text(
+                  "Chargement en cours...",
+                  style: TextStyle(color: Colors.white),
+                ));
               } else if (snapshot.connectionState == ConnectionState.done) {
                 return Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -113,7 +122,9 @@ class MeteoDetail4H extends StatelessWidget {
                                   .toString() +
                               " km/h",
                           style: TextStyle(
-                              fontWeight: FontWeight.w700, fontSize: 15, color: Colors.white),
+                              fontWeight: FontWeight.w700,
+                              fontSize: 15,
+                              color: Colors.white),
                         ),
                         SizedBox(
                           height: 2,
@@ -137,7 +148,9 @@ class MeteoDetail4H extends StatelessWidget {
                           snapshot.data!.list![10].main!.humidity.toString() +
                               " %",
                           style: TextStyle(
-                              fontWeight: FontWeight.w700, fontSize: 15, color: Colors.white),
+                              fontWeight: FontWeight.w700,
+                              fontSize: 15,
+                              color: Colors.white),
                         ),
                         SizedBox(
                           height: 2,
@@ -151,7 +164,10 @@ class MeteoDetail4H extends StatelessWidget {
                   ],
                 );
               } else {
-                return const Text("Une error est survenue.", style: TextStyle(color: Colors.white),);
+                return const Text(
+                  "Une error est survenue.",
+                  style: TextStyle(color: Colors.white),
+                );
               }
             }));
   }

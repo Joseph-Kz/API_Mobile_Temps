@@ -5,13 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:jiffy/jiffy.dart';
 import 'package:flutter_glow/flutter_glow.dart';
 
-import '../db/sqflite_service.dart';
 import '../screens/homepage.dart';
 import '../utiles/Descriptionmeteo.dart';
 import '../views/pageDetail.dart';
 import 'city4H.dart';
 import 'citydb.dart';
-import 'meteo.dart';
 import 'meteoDetail.dart';
 
 class HomePage extends StatelessWidget {
@@ -55,7 +53,11 @@ class MeteoActu extends StatelessWidget {
           future: getMainpageInfo('lyon'),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Center(child: Text("Chargement en cours...", style: TextStyle(color: Colors.white),));
+              return const Center(
+                  child: Text(
+                "Chargement en cours...",
+                style: TextStyle(color: Colors.white),
+              ));
             } else if (snapshot.connectionState == ConnectionState.done) {
               return Column(
                 children: [
@@ -79,7 +81,9 @@ class MeteoActu extends StatelessWidget {
                           Text(
                             snapshot.data!.name.toString(),
                             style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 30, color: Colors.white),
+                                fontWeight: FontWeight.bold,
+                                fontSize: 30,
+                                color: Colors.white),
                           ),
                         ],
                       ),
@@ -98,7 +102,8 @@ class MeteoActu extends StatelessWidget {
                     ),
                     child: Text(
                       "Actualiser",
-                      style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold, color: Colors.white),
                     ),
                   ),
                   Container(
@@ -106,7 +111,8 @@ class MeteoActu extends StatelessWidget {
                     child: Stack(
                       children: [
                         Image(
-                          image: AssetImage(weatherStatus(snapshot.data!.weather![0].main)),
+                          image: AssetImage(
+                              weatherStatus(snapshot.data!.weather![0].main)),
                           fit: BoxFit.fill,
                         ),
                         Positioned(
@@ -124,7 +130,8 @@ class MeteoActu extends StatelessWidget {
                                   style: TextStyle(
                                       height: 0.1,
                                       fontSize: 70,
-                                      fontWeight: FontWeight.bold, color: Colors.white),
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white),
                                 ),
                                 SizedBox(
                                   height: 20,
@@ -132,13 +139,15 @@ class MeteoActu extends StatelessWidget {
                                 Text(
                                   (snapshot.data!.weather![0].description)
                                       .toString(),
-                                  style: TextStyle(fontSize: 25, color: Colors.white),
+                                  style: TextStyle(
+                                      fontSize: 25, color: Colors.white),
                                 ),
                                 Text(
                                   Jiffy(currentTime)
                                       .format('EEEE dd MMMM yyyy')
                                       .toString(),
-                                  style: TextStyle(fontSize: 25, color: Colors.white),
+                                  style: TextStyle(
+                                      fontSize: 25, color: Colors.white),
                                 ),
                               ],
                             ),
@@ -155,7 +164,10 @@ class MeteoActu extends StatelessWidget {
                 ],
               );
             } else {
-              return const Text("Une error est survenue. ", style: TextStyle(color: Colors.white),);
+              return const Text(
+                "Une error est survenue. ",
+                style: TextStyle(color: Colors.white),
+              );
             }
           }),
     );
@@ -176,7 +188,8 @@ class MeteoJour extends StatelessWidget {
             children: [
               Text(
                 "Aujourd'hui",
-                style: TextStyle(color: Colors.white,
+                style: TextStyle(
+                  color: Colors.white,
                   fontSize: 25,
                   fontWeight: FontWeight.bold,
                 ),
@@ -215,7 +228,11 @@ class MeteoJour extends StatelessWidget {
                 future: get4HInfo("Lyon"),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const Center(child: Text("Chargement en cours...", style: TextStyle(color: Colors.white),));
+                    return const Center(
+                        child: Text(
+                      "Chargement en cours...",
+                      style: TextStyle(color: Colors.white),
+                    ));
                   } else if (snapshot.connectionState == ConnectionState.done) {
                     return Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -226,7 +243,10 @@ class MeteoJour extends StatelessWidget {
                           MeteoWidget(snapshot.data!.list![3]),
                         ]);
                   } else {
-                    return const Text("Une error est survenue.", style: TextStyle(color: Colors.white),);
+                    return const Text(
+                      "Une error est survenue.",
+                      style: TextStyle(color: Colors.white),
+                    );
                   }
                 }),
           ),
@@ -255,7 +275,7 @@ class MeteoWidget extends StatelessWidget {
             height: 2,
           ),
           Image(
-            image: AssetImage("assets/rainy_2d.png"),
+            image: AssetImage(weatherStatus(meteo.weather![0].main)),
             width: 40,
             height: 40,
           ),

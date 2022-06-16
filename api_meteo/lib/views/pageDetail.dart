@@ -5,7 +5,6 @@ import 'package:flutter_glow/flutter_glow.dart';
 import 'package:jiffy/jiffy.dart';
 
 import '../models/city4H.dart';
-import '../models/meteo.dart';
 import '../models/meteoDetail.dart';
 import '../services/day_API.dart';
 import '../utiles/Descriptionmeteo.dart';
@@ -51,7 +50,8 @@ class CinqJours extends StatelessWidget {
                                 Jiffy(snapshot.data!.list![i].dtTxt)
                                     .format('E    HH:mm')
                                     .toString(),
-                                style: TextStyle(fontSize: 25, color: Colors.white),
+                                style: TextStyle(
+                                    fontSize: 25, color: Colors.white),
                               ),
                               Container(
                                 width: 135,
@@ -59,7 +59,8 @@ class CinqJours extends StatelessWidget {
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
                                     Image(
-                                      image: AssetImage(weatherStatus(snapshot.data!.list![i].weather![0].main)),
+                                      image: AssetImage(weatherStatus(snapshot
+                                          .data!.list![i].weather![0].main)),
                                       width: 40,
                                     ),
                                     SizedBox(
@@ -68,7 +69,8 @@ class CinqJours extends StatelessWidget {
                                     Text(
                                       snapshot.data!.list![i].weather![0].main
                                           .toString(),
-                                      style: TextStyle(fontSize: 20, color: Colors.white),
+                                      style: TextStyle(
+                                          fontSize: 20, color: Colors.white),
                                     )
                                   ],
                                 ),
@@ -80,7 +82,8 @@ class CinqJours extends StatelessWidget {
                                             .toInt()
                                             .toString() +
                                         "\u00B0",
-                                    style: TextStyle(fontSize: 20, color: Colors.white),
+                                    style: TextStyle(
+                                        fontSize: 20, color: Colors.white),
                                   ),
                                   SizedBox(
                                     width: 5,
@@ -118,7 +121,11 @@ class MeteoProchain extends StatelessWidget {
           future: get4HInfo("Lyon"),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Center(child: Text("Chargement en cours...", style: TextStyle(color: Colors.white),));
+              return const Center(
+                  child: Text(
+                "Chargement en cours...",
+                style: TextStyle(color: Colors.white),
+              ));
             } else if (snapshot.connectionState == ConnectionState.done) {
               return Column(
                 children: [
@@ -146,7 +153,9 @@ class MeteoProchain extends StatelessWidget {
                             Text(
                               "Détail",
                               style: TextStyle(
-                                  fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white),
                             )
                           ],
                         ),
@@ -167,7 +176,8 @@ class MeteoProchain extends StatelessWidget {
                           height: MediaQuery.of(context).size.width / 2,
                           decoration: BoxDecoration(
                             image: DecorationImage(
-                                image: AssetImage(weatherStatus(snapshot.data!.list![8].weather![0].main))),
+                                image: AssetImage(weatherStatus(
+                                    snapshot.data!.list![8].weather![0].main))),
                           ),
                         ),
                         Column(
@@ -176,7 +186,10 @@ class MeteoProchain extends StatelessWidget {
                           children: [
                             Text(
                               "Demain",
-                              style: TextStyle(fontSize: 23, height: 0.1, color: Colors.white),
+                              style: TextStyle(
+                                  fontSize: 23,
+                                  height: 0.1,
+                                  color: Colors.white),
                             ),
                             Container(
                               height: 100,
@@ -189,7 +202,8 @@ class MeteoProchain extends StatelessWidget {
                                         .toString(),
                                     style: TextStyle(
                                         fontSize: 80,
-                                        fontWeight: FontWeight.bold, color: Colors.white),
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.white),
                                   ),
                                   Text(
                                     "/ " +
@@ -211,7 +225,8 @@ class MeteoProchain extends StatelessWidget {
                             Text(
                               snapshot.data!.list![12].weather![0].description
                                   .toString(),
-                              style: TextStyle(fontSize: 15, color: Colors.white),
+                              style:
+                                  TextStyle(fontSize: 15, color: Colors.white),
                             )
                           ],
                         ),
@@ -235,7 +250,10 @@ class MeteoProchain extends StatelessWidget {
                 ],
               );
             } else {
-              return const Text("Une error est survenue.", style: TextStyle(color: Colors.white),);
+              return const Text(
+                "Une error est survenue.",
+                style: TextStyle(color: Colors.white),
+              );
             }
           }),
     );

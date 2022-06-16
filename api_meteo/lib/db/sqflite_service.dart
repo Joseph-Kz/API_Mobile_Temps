@@ -46,20 +46,8 @@ class SqliteService {
     }
   }
 
-  // void createTable(Database db) async {
-  //   db?.execute(
-  //       "CREATE TABLE Cities(id INTEGER PRIMARY KEY AUTOINCREMENT, city TEXT NOT NULL)");
-  // }
-
   Future<void> getCities(String city) async {
     final Database db = await initDB();
     await db.query("Cities", where: "city=?", whereArgs: [city]);
   }
 }
-
-// class ActualCity {
-//   ActualCity(StreamingSharedPreferences preferences)
-//       : city = preferences.getString('city', defaultValue: "");
-
-//   final Preference<String> city;
-// }

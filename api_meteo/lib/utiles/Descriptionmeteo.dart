@@ -1,11 +1,8 @@
 String weatherStatus(String? main) {
   String? assets = "";
   switch (main) {
-    case ("Sunny"):
-      assets = "assets/clear.png";
-      break;
     case ("Clear"):
-      assets = "assets/sunny.png";
+      assets = "assets/clear.png";
       break;
     case ("Rain"):
       assets = "assets/rainy.png";
