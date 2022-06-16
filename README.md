@@ -18,8 +18,8 @@ Vous arrivez sur la page principal contenant la meteo de la ville par défault.
                    <br> &emsp; - Cliquez sur "Détail" pour accéder à la météo des futures jours de la semaine.
 
 
-#### Problèmes rencontrés
+### Problèmes rencontrés
 
-Difficulté à récupérer les données de l'API.<br>
-Difficulté à rendre les icons dynamiques.<br>
-Difficulté à récupérer les données d'api de la ville souhaitée par l'utilisateur.<br>
+&emsp; Difficulté à récupérer les données de l'API.<br>
+&emsp; Difficulté à rendre les icons dynamiques.<br>
+&emsp; Difficulté à récupérer les données d'api de la ville souhaitée par l'utilisateur.<br>
