@@ -13,13 +13,13 @@ Application de donnée météo
 ## Lancement de l'application
 
 Vous arrivez sur la page principal contenant la meteo de la ville par défault.
-2 possibilités sont disponible:
-                   - Cliquez en haut à gauche pour accéder à la page d'ajout, de modifications et de supressions des villes. (à venir: cliquer sur la ville pour accéder à sa météo)<br>
-                   - Cliquez sur "Détail" pour accéder à la météo des futures jours de la semaine.
+2 possibilités sont disponible:<br>
+                   - Cliquez en haut à gauche pour accéder à la page d'ajout, de modifications et de supressions des villes. (à venir: cliquer sur la ville pour accéder à sa météo)
+                   <br>- Cliquez sur "Détail" pour accéder à la météo des futures jours de la semaine.
 
 
 #### Problèmes rencontrés
 
-Difficulté à récupérer les données de l'API.
-Difficulté à rendre les icons dynamiques.
-Difficulté à récupérer les données d'api de la ville souhaitée par l'utilisateur.
+Difficulté à récupérer les données de l'API.<br>
+Difficulté à rendre les icons dynamiques.<br>
+Difficulté à récupérer les données d'api de la ville souhaitée par l'utilisateur.<br>
