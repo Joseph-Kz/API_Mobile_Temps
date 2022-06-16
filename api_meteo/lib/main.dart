@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
           textTheme: Theme.of(context)
               .textTheme
               .apply(bodyColor: Colors.black87, displayColor: Colors.green)),
-      home: const HomePage(),
+      home: const HomePage(theCity: '',),
     );
   }
 }

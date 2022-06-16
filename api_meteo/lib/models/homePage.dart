@@ -2,14 +2,22 @@ import 'package:api_meteo/models/city.dart';
 import 'package:api_meteo/screens/homepage.dart';
 import 'package:api_meteo/services/day_API.dart';
 import 'package:flutter/material.dart';
+import 'package:jiffy/jiffy.dart';
 import 'package:flutter_glow/flutter_glow.dart';
 
+import '../db/sqflite_service.dart';
+import '../screens/homepage.dart';
+import '../utiles/Descriptionmeteo.dart';
 import '../views/pageDetail.dart';
+import 'city4H.dart';
+import 'citydb.dart';
 import 'meteo.dart';
 import 'meteoDetail.dart';
 
 class HomePage extends StatelessWidget {
-  const HomePage({Key? key}) : super(key: key);
+  const HomePage({Key? key, required this.theCity}) : super(key: key);
+
+  final String theCity;
 
   @override
   Widget build(BuildContext context) {
@@ -30,10 +38,12 @@ class MeteoActu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    List<CityModel> datas = [];
+    DateTime currentTime = DateTime.now();
     return GlowContainer(
       height: MediaQuery.of(context).size.height - 230,
       margin: EdgeInsets.all(2),
-      padding: EdgeInsets.only(top: 15, left: 30, right: 30),
+      padding: EdgeInsets.only(top: 30, left: 30, right: 30),
       glowColor: Colors.green.withOpacity(0.5),
       borderRadius: BorderRadius.only(
         bottomLeft: Radius.circular(50),
@@ -41,107 +51,113 @@ class MeteoActu extends StatelessWidget {
       ),
       color: Colors.green,
       spreadRadius: 5,
-      child: Column(
-        children: [
-          // FutureBuilder<City>(
-          //     future: getInfoData(cityController.text),
-          //     builder: (context, snapshot) {
-          //       if (snapshot.connectionState == ConnectionState.waiting) {
-          //         return const Center(child: Text("Chargement en cours..."));
-          //       } else if (snapshot.connectionState == ConnectionState.done) {
-          //         return ListTile(
-          //           title: Text(snapshot.data!.name.toString()),
-          //         );
-          //       } else {
-          //         return const Text("Une error est survenue. ");
-          //       }
-          //     }),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              GestureDetector(
-                onTap: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (BuildContext context) {
-                    return MyHomePage();
-                  }));
-                },
-                child: Icon(
-                  Icons.reorder_rounded,
-                  color: Colors.white,
-                ),
-              ),
-              Row(
+      child: FutureBuilder<City>(
+          future: getMainpageInfo('lyon'),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(child: Text("Chargement en cours...", style: TextStyle(color: Colors.white),));
+            } else if (snapshot.connectionState == ConnectionState.done) {
+              return Column(
                 children: [
-                  Text(
-                    " " + meteoJour[0].nom,
-                    style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold, fontSize: 30),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(context, MaterialPageRoute(
+                              builder: (BuildContext context) {
+                            return HomePage2();
+                          }));
+                        },
+                        child: Icon(
+                          Icons.reorder_rounded,
+                          color: Colors.white,
+                        ),
+                      ),
+                      Row(
+                        children: [
+                          Text(
+                            snapshot.data!.name.toString(),
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 30, color: Colors.white),
+                          ),
+                        ],
+                      ),
+                      Icon(
+                        Icons.more_vert,
+                        color: Colors.white,
+                      )
+                    ],
                   ),
-                ],
-              ),
-              Icon(
-                Icons.more_vert,
-                color: Colors.white,
-              )
-            ],
-          ),
-          Container(
-            margin: EdgeInsets.only(top: 10),
-            padding: EdgeInsets.all(10),
-            decoration: BoxDecoration(
-              border: Border.all(width: 0.2, color: Colors.white),
-              borderRadius: BorderRadius.circular(30),
-            ),
-            child: Text(
-              "Actualiser",
-              style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),
-            ),
-          ),
-          Container(
-            height: 330,
-            child: Stack(
-              children: [
-                Image(
-                  image: AssetImage("assets/sunny.png"),
-                  fit: BoxFit.fill,
-                ),
-                Positioned(
-                  bottom: 0,
-                  right: 0,
-                  left: 0,
-                  child: Center(
-                    child: Column(
+                  Container(
+                    margin: EdgeInsets.only(top: 20),
+                    padding: EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                      border: Border.all(width: 0.5, color: Colors.white),
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                    child: Text(
+                      "Actualiser",
+                      style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
+                    ),
+                  ),
+                  Container(
+                    height: 330,
+                    child: Stack(
                       children: [
-                        GlowText(
-                          (meteoJour[0].kelvin - 273.15).toString() + "\u00B0",
-                          style: TextStyle(
-                              color: Colors.white,
-                              height: 0.1,
-                              fontSize: 80,
-                              fontWeight: FontWeight.bold),
+                        Image(
+                          image: AssetImage(weatherStatus(snapshot.data!.weather![0].main)),
+                          fit: BoxFit.fill,
                         ),
-                        Text(
-                          "Soleil",
-                          style: TextStyle(color: Colors.white,fontSize: 25),
-                        ),
-                        Text(
-                          "Jour 1",
-                          style: TextStyle(color: Colors.white,fontSize: 25),
-                        ),
+                        Positioned(
+                          bottom: 0,
+                          right: 0,
+                          left: 0,
+                          child: Center(
+                            child: Column(
+                              children: [
+                                GlowText(
+                                  (snapshot.data!.main!.temp!)
+                                          .toInt()
+                                          .toString() +
+                                      "\u00B0",
+                                  style: TextStyle(
+                                      height: 0.1,
+                                      fontSize: 70,
+                                      fontWeight: FontWeight.bold, color: Colors.white),
+                                ),
+                                SizedBox(
+                                  height: 20,
+                                ),
+                                Text(
+                                  (snapshot.data!.weather![0].description)
+                                      .toString(),
+                                  style: TextStyle(fontSize: 25, color: Colors.white),
+                                ),
+                                Text(
+                                  Jiffy(currentTime)
+                                      .format('EEEE dd MMMM yyyy')
+                                      .toString(),
+                                  style: TextStyle(fontSize: 25, color: Colors.white),
+                                ),
+                              ],
+                            ),
+                          ),
+                        )
                       ],
                     ),
                   ),
-                )
-              ],
-            ),
-          ),
-          Divider(color: Colors.white),
-          SizedBox(
-            height: 5,
-          ),
-          MeteoDetail(meteoJour[0])
-        ],
-      ),
+                  Divider(color: Colors.white),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  MeteoDetail(),
+                ],
+              );
+            } else {
+              return const Text("Une error est survenue. ", style: TextStyle(color: Colors.white),);
+            }
+          }),
     );
   }
 }
@@ -175,7 +191,7 @@ class MeteoJour extends StatelessWidget {
                 child: Row(
                   children: [
                     Text(
-                      "5 jours",
+                      "Détail",
                       style: TextStyle(fontSize: 18, color: Colors.grey),
                     ),
                     Icon(
@@ -195,14 +211,24 @@ class MeteoJour extends StatelessWidget {
             margin: EdgeInsets.only(
               bottom: 30,
             ),
-            child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  MeteoWidget(meteoJour[0]),
-                  MeteoWidget(meteoJour[0]),
-                  MeteoWidget(meteoJour[0]),
-                  MeteoWidget(meteoJour[0]),
-                ]),
+            child: FutureBuilder<City4H>(
+                future: get4HInfo("Lyon"),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(child: Text("Chargement en cours...", style: TextStyle(color: Colors.white),));
+                  } else if (snapshot.connectionState == ConnectionState.done) {
+                    return Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          MeteoWidget(snapshot.data!.list![0]),
+                          MeteoWidget(snapshot.data!.list![1]),
+                          MeteoWidget(snapshot.data!.list![2]),
+                          MeteoWidget(snapshot.data!.list![3]),
+                        ]);
+                  } else {
+                    return const Text("Une error est survenue.", style: TextStyle(color: Colors.white),);
+                  }
+                }),
           ),
         ],
       ),
@@ -211,7 +237,7 @@ class MeteoJour extends StatelessWidget {
 }
 
 class MeteoWidget extends StatelessWidget {
-  final Meteo meteo;
+  final ListW meteo;
   MeteoWidget(this.meteo);
 
   @override
@@ -223,8 +249,8 @@ class MeteoWidget extends StatelessWidget {
           borderRadius: BorderRadius.circular(30)),
       child: Column(
         children: [
-          Text((meteo.kelvin - 273.15).toString() + "\u00B0",
-              style: TextStyle(fontSize: 20)),
+          Text((meteo.main!.temp!.toInt()).toString() + "\u00B0",
+              style: TextStyle(fontSize: 20, color: Colors.white)),
           SizedBox(
             height: 2,
           ),
@@ -237,7 +263,7 @@ class MeteoWidget extends StatelessWidget {
             height: 2,
           ),
           Text(
-            "12:00",
+            Jiffy(meteo.dtTxt).format('H:mm').toString(),
             style: TextStyle(
               fontSize: 16,
               color: Colors.grey,

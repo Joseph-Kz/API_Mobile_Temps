@@ -7,6 +7,7 @@ class City {
   int? id;
   String? name;
   int? cod;
+  String? assets_img;
 
   City(
       {this.weather,
@@ -16,7 +17,8 @@ class City {
       this.timezone,
       this.id,
       this.name,
-      this.cod});
+      this.cod,
+      this.assets_img});
 
   City.fromJson(Map<String, dynamic> json) {
     if (json['weather'] != null) {
@@ -77,7 +79,7 @@ class Main {
   Main({this.temp, this.humidity});
 
   Main.fromJson(Map<String, dynamic> json) {
-    temp = json['temp'];
+    temp = json['temp'].toDouble();
     humidity = json['humidity'];
   }
 
